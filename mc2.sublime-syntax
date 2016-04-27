@@ -172,9 +172,9 @@ contexts:
       scope: keyword.operator.bitwise.mc2
 
   structures:
-    - match: (?<!\S)(\[|\]|\[\]|\}|}|\}}|<%|%>|<S|S>)(?!\S)
+    - match: (?<!\S)(\[|\]|\[\]|\}|}|\}}|<%|%>|<S|S>|null|null)(?!\S)
       scope: keyword.control.mc2    
 
   constants:
-    - match: (?<!\S)(E|e|NaN|MAXLONG|NULL|max.time.sliding.window|MINLONG|pi|PI|max.tick.sliding.window)(?!\S)    
+    - match: (?<!\S)(true|false|E|e|NaN|MAXLONG|NULL|max.time.sliding.window|MINLONG|pi|PI|max.tick.sliding.window)(?!\S)    
       scope: constant.language.mc2
