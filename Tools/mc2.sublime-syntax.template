@@ -14,6 +14,7 @@ contexts:
     # rules
     - include: comments    
     - include: variables
+    - include: macros
     - include: inline_strings
     - include: multiline_strings
     - include: numbers
@@ -67,7 +68,11 @@ contexts:
 
   variables:
     - match: '\$([A-Za-z0-9._]+)'
-      scope: variable.other.mc2
+      scope: variable.parameter.mc2
+
+  macros:
+    - match: '\@([A-Za-z0-9._]+)'
+      scope: entity.name.filename.mc2
 
   # Numbers
   numbers:  
