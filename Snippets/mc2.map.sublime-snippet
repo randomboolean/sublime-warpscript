@@ -1,0 +1,6 @@
+<snippet>
+    <content><![CDATA[ [ ${1:gts} ${2:mapper.function} ${3:pre} ${4:post} ${5:occurrences} ] MAP ]]></content>
+    <tabTrigger>MAP</tabTrigger>
+    <scope>source.mc2</scope> 
+    <description>MAP framework</description>
+</snippet>

@@ -1,0 +1,6 @@
+<snippet>
+    <content><![CDATA[ [ ${1:gts_list} [${2:labels}] ${3:op.function} ] APPLY ]]></content>
+    <tabTrigger>APPLY</tabTrigger>
+    <scope>source.mc2</scope> 
+    <description>APPLY framework</description>
+</snippet>

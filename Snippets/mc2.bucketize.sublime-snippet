@@ -1,0 +1,6 @@
+<snippet>
+    <content><![CDATA[ [ ${1:gts} ${2:bucketizer.function} ${3:lastbucket} ${4:bucketspan} ${5:bucketcount} ] BUCKETIZE ]]></content>
+    <tabTrigger>BUCKETIZE</tabTrigger>
+    <scope>source.mc2</scope> 
+    <description>BUCKETIZE framework</description>
+</snippet>

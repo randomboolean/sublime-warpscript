@@ -1,0 +1,14 @@
+<snippet>
+    <content><![CDATA[ 
+<% ${1:true} %> // If (boolean condition)
+<% // THEN
+  // Do something
+%> 
+<% // ELSE
+ // Do something else
+%> IFTE
+]]></content>
+    <tabTrigger>IFTE</tabTrigger>
+    <scope>source.mc2</scope> 
+    <description>If(condition) Then / Else</description>
+</snippet>

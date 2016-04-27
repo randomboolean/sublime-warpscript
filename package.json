@@ -1,0 +1,11 @@
+{
+  "name": "warp_script",
+  "license": "Apache 2.0",
+  "version": "1.0.5-0",
+  "author": "Sébastien Lambour <sebastien.lambour@gmail.com>",
+  "description": "Syntax coloration for Warp Script",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cityzendata/sublime-warpscript.git"
+  }
+}

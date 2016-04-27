@@ -1,0 +1,11 @@
+<snippet>
+    <content><![CDATA[ 
+<% ${1:true} %> // If (boolean condition)
+<% // THEN
+    // Do something
+%> IFT
+]]></content>
+    <tabTrigger>IFT</tabTrigger>
+    <scope>source.mc2</scope> 
+    <description>If(condition) Then</description>
+</snippet>

@@ -1,0 +1,6 @@
+<snippet>
+    <content><![CDATA[ [ ${1:gts_list} [${2:labels}] ${3:filter.function} ] FILTER ]]></content>
+    <tabTrigger>FILTER</tabTrigger>
+    <scope>source.mc2</scope> 
+    <description>FILTER framework</description>
+</snippet>
