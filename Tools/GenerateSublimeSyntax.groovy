@@ -53,6 +53,7 @@ functions.each { function ->
     // MERGE frameworks functions
     def frameworkFunctions = []
     function.value.each { k,v ->
+      frameworkFunctions.add(k)
       v.each { categorie, values ->
         frameworkFunctions.addAll(values)
       }      

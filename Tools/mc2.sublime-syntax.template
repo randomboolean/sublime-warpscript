@@ -34,8 +34,8 @@ contexts:
     - include: functions_timeunit
     - include: functions_platform
     
-    # language frameworks    
-    - include: framework_functions
+    # language frameworks   
+    - include: functions_frameworks
 
     # language operators
     - include: operators
