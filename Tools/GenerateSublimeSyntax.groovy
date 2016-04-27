@@ -82,10 +82,15 @@ functions.each { function ->
     break;
 
     case 'structures':
-    def structures = function.value.collect{ it ->
-      it = regexpEscape(it)
-    }.join('|')
-    syntaxFileTemplate = syntaxFileTemplate.replace('{{structures}}', structures)
+      def structures = function.value.collect{ it ->
+        // Removes manueally <' and '> (static code in the template)
+        if ("<'".equals(it) || "'>".equals(it)) {
+          return
+        }
+        it = regexpEscape(it)
+      }.join('|')
+      
+      syntaxFileTemplate = syntaxFileTemplate.replace('{{structures}}', structures)
     break;    
   }
 }
