@@ -9,10 +9,6 @@ Warp Script is a time series data manipulation language for [Warp10](http://www.
 This package user have a x.y.z-indice version number.
 x.y.z is the base version of Warp10 pltaform, the "indice" is the package build number. This link is mandatory because Warp Scripts functions list is directly extracted from [Warp10-plateform](https://github.com/cityzendata/warp10-platform)
 
-## Known limits 
-
-Invalid expressions likes `LIST->DROP` are not yet detected as invalid syntax (a space is missing before DROP). This package has been based on `\b\b` regexp witch is not fully adapted to WarpScript's syntax. I'll fix it in a future version, with helps of a regexp craftman ;-)
-
 ## Install
 
 The easiest way to install this is with Package Control.
