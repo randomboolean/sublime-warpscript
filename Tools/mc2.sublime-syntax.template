@@ -1,0 +1,175 @@
+%YAML1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: WARPSCRIPT
+file_extensions: [mc2]
+scope: source.mc2
+contexts:
+  main:
+    # Comments begin with a '//' and finish at the end of the line
+    - match: \b*((//).*$)
+      scope: punctuation.definition.comment.mc2
+      push: line_comment
+
+    # rules
+    - include: comments    
+    - include: variables
+    - include: inline_strings
+    - include: multiline_strings
+    - include: numbers
+
+    # language functions
+    - include: functions_trigonometry
+    - include: functions_string
+    - include: functions_date
+    - include: functions_bucketized
+    - include: functions_typeConversion
+    - include: functions_gts
+    - include: functions_list
+    - include: functions_stack
+    - include: functions_outlier
+    - include: functions_misc
+    - include: functions_math
+    - include: functions_geo
+    - include: functions_timeunit
+    - include: functions_platform
+    
+    # language frameworks    
+    - include: framework_functions
+
+    # language operators
+    - include: operators
+
+    # misc
+    - include: structures
+    - include: constants
+
+  comments:
+    - match: /\*\*/
+      scope: comment.block.empty.mc2
+    - include: comments-inline
+  comments-inline:
+    - match: /\*
+      captures:
+        0: punctuation.definition.comment.mc2
+      push:
+        - meta_scope: comment.block.java
+        - match: \*/
+          captures:
+            0: punctuation.definition.comment.mc2
+          pop: true
+    - match: \b*((//).*$)  
+
+  line_comment:
+    - meta_scope: comment.line.mc2
+    - match: $
+      pop: true 
+
+  variables:
+    - match: '\$([A-Za-z0-9._]+)'
+      scope: variable.other.mc2
+
+  # Numbers
+  numbers:  
+    - match: (?<!\S)(-)?[0-9.]+\b
+      scope: constant.numeric.mc2
+
+  inline_strings:
+    - match: (?<!\S)('.*')(?!\S)
+      scope: string.quoted.double.mc2
+              
+  multiline_strings:
+    # Strings begin and end with quotes, and use backslashes as an escape
+    # character
+    - match: '^<''$'
+      scope: punctuation.definition.string.begin.mc2
+      push: multiline_string_end
+
+  multiline_string_end:
+    - meta_scope: string.quoted.double.mc2
+    - match: '\\.'
+      scope: constant.character.escape.mc2
+    - match: '^''>$'
+      scope: punctuation.definition.string.end.mc2
+      pop: true
+
+  # language functions
+  functions_trigonometry:
+    - match: (?<!\S)({{functions_trigonometry}})(?!\S)
+      scope: support.function
+
+  functions_string:
+    - match: (?<!\S)({{functions_string}})(?!\S)
+      scope: support.function
+
+  functions_date:
+    - match: (?<!\S)({{functions_date}})(?!\S)
+      scope: support.function
+
+  functions_bucketized:
+    - match: (?<!\S)({{functions_bucketized}})(?!\S)
+      scope: support.function
+
+  functions_typeConversion:
+    - match: (?<!\S)({{functions_typeConversion}})(?!\S)
+      scope: support.function
+
+  functions_gts:
+    - match: (?<!\S)({{functions_gts}})(?!\S)
+      scope: support.function
+
+  functions_list:
+    - match: (?<!\S)({{functions_list}})(?!\S)
+      scope: support.function
+
+  functions_stack:
+    - match: (?<!\S)({{functions_stack}})(?!\S)
+      scope: support.function
+
+  functions_outlier:
+    - match: (?<!\S)({{functions_outlier}})(?!\S)
+      scope: support.function
+
+  functions_misc:
+    - match: (?<!\S)({{functions_misc}})(?!\S)
+      scope: support.function
+
+  functions_math:
+    - match: (?<!\S)({{functions_math}})(?!\S)
+      scope: support.function
+
+  functions_geo:
+    - match: (?<!\S)({{functions_geo}})(?!\S)
+      scope: support.function
+
+  functions_timeunit:
+    - match: (?<!\S)({{functions_timeunit}})(?!\S)
+      scope: support.function
+
+  functions_platform:
+    - match: (?<!\S)({{functions_platform}})(?!\S)
+      scope: support.function
+
+  functions_frameworks:
+    - match: (?<!\S)({{functions_frameworks}})(?!\S)
+      scope: entity.name.function.mc2
+
+  operators:
+    - match: (?<!\S)({{functions_logicStructures}})(?!\S)
+      scope: keyword.control.mc2
+    - match: (?<!\S)({{operator_comparison}})(?!\S)
+      scope: keyword.operator.comparison.mc2
+    - match: (?<!\S)({{operator_artimetic}})(?!\S)
+      scope: keyword.operator.arithmetic.mc2
+    - match: (?<!\S)({{operator_logical}})(?!\S)
+      scope: keyword.operator.logical.mc2
+    - match: (?<!\S)({{operator_bitwise}})(?!\S)
+      scope: keyword.operator.bitwise.mc2
+
+  structures:
+    - match: (?<!\S)({{structures}})(?!\S)
+      scope: keyword.control.mc2    
+
+  constants:
+    - match: (?<!\S)({{constants}})(?!\S)    
+      scope: constant.language.mc2
