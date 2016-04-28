@@ -43,10 +43,17 @@ def String regexpEscape(String input) {
 // load template
 def syntaxFileTemplate = new File('./mc2.sublime-syntax.template').getText('UTF-8')
 
+// completion output
+def completionOutput = []
+
+
 functions.each { function ->    
   switch(function.key) {
     case 'constants':
       syntaxFileTemplate = syntaxFileTemplate.replace('{{constants}}', function.value.join('|'))
+
+      // Adds completion output
+      completionOutput.addAll(function.value)
     break;
 
     case 'frameworks':
@@ -56,6 +63,9 @@ functions.each { function ->
       frameworkFunctions.add(k)
       v.each { categorie, values ->
         frameworkFunctions.addAll(values)
+
+        // Adds completion output
+        completionOutput.addAll(values)
       }      
     }
     syntaxFileTemplate = syntaxFileTemplate.replace("{{functions_frameworks}}", frameworkFunctions.join('|'))
@@ -66,6 +76,9 @@ functions.each { function ->
       function.value.each { name, values ->
         name = name.replace('.','_')
         syntaxFileTemplate = syntaxFileTemplate.replace("{{$name}}", values.join('|'))
+
+        // Adds completion output
+        completionOutput.addAll(values)
       }
     break;
 
@@ -78,6 +91,9 @@ functions.each { function ->
         }.join('|')
 
         syntaxFileTemplate = syntaxFileTemplate.replace("{{$name}}", operators)
+
+        // Adds completion output
+        completionOutput.addAll(values)
       }
     break;
 
@@ -89,8 +105,11 @@ functions.each { function ->
         }
         it = regexpEscape(it)
       }.join('|')
-      
+
       syntaxFileTemplate = syntaxFileTemplate.replace('{{structures}}', structures)
+
+      // Adds completion output
+      completionOutput.addAll(function.value)
     break;    
   }
 }
@@ -98,6 +117,9 @@ functions.each { function ->
 // save syntax file
 def outputFile = new File('./mc2.sublime-syntax')
 outputFile << syntaxFileTemplate
+
+def outputCompletionFile = new File('./mc2.sublime-completions')
+outputCompletionFile << JsonOutput.toJson([scope: 'source.mc2', completion: completionOutput])
 
 
 

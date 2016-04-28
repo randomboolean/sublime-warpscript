@@ -16,6 +16,7 @@ contexts:
     - include: variables
     - include: macros
     - include: inline_strings
+    - include: inline_double_quoted_strings
     - include: multiline_strings
     - include: numbers
 
@@ -82,11 +83,16 @@ contexts:
   inline_strings:
     - match: (?<!\S)('.*')(?!\S)
       scope: string.quoted.double.mc2
+
+  inline_double_quoted_strings:
+    - match: (?<!\S)(".*")(?!\S)
+      scope: string.quoted.double.mc2
+
               
   multiline_strings:
     # Strings begin and end with quotes, and use backslashes as an escape
     # character
-    - match: '^<''$'
+    - match: \s*(<')\s*
       scope: punctuation.definition.string.begin.mc2
       push: multiline_string_end
 
@@ -97,6 +103,8 @@ contexts:
     - match: '^''>$'
       scope: punctuation.definition.string.end.mc2
       pop: true
+    - match: .*('>).*
+      scope: invalid      
 
   # language functions
   functions_trigonometry:
