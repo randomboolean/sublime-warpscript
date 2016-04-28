@@ -119,7 +119,7 @@ def outputFile = new File('./mc2.sublime-syntax')
 outputFile << syntaxFileTemplate
 
 def outputCompletionFile = new File('./mc2.sublime-completions')
-outputCompletionFile << JsonOutput.toJson([scope: 'source.mc2', completion: completionOutput])
+outputCompletionFile << JsonOutput.toJson([scope: 'source.mc2', completions: completionOutput])
 
 
 
