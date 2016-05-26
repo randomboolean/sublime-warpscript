@@ -1,7 +1,7 @@
 <snippet>
     <content><![CDATA[
 [   
-  ${1:gtsList}   
+  ${1:gtsList}
   <%
     'mapping_window' STORE // Storing the current mapping window
 

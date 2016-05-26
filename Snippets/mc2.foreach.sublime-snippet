@@ -1,8 +1,10 @@
 <snippet>
     <content><![CDATA[ 
 // LIST OR MAP at the top of the stack
+${1:listOrMap}
 <% 
-    // the current list value at the top of the stack
+    // push for each elements on the stack
+    // with value always on the top
     // Do something
 %> FOREACH
 ]]></content>
