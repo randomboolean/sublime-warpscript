@@ -1,0 +1,12 @@
+<snippet>
+    <content><![CDATA[ 
+// LIST OR MAP at the top of the stack
+<% 
+    // the current list value at the top of the stack
+    // Do something
+%> FOREACH
+]]></content>
+    <tabTrigger>FOREACH</tabTrigger>
+    <scope>source.mc2</scope> 
+    <description>FOREACH(list) apply macro</description>
+</snippet>

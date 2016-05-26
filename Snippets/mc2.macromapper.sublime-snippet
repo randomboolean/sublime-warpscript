@@ -1,0 +1,24 @@
+<snippet>
+    <content><![CDATA[
+[   
+  ${1:gtsList}   
+  <%
+    'mapping_window' STORE // Storing the current mapping window
+
+    // keep the tick
+    $mapping_window 0 GET         // Tick
+    $mapping_window 4 GET 0 GET   // Latitude
+    $mapping_window 5 GET 0 GET   // Longitude
+    $mapping_window 6 GET 0 GET   // Elevation
+    $mapping_window 7 GET 0 GET   // Value
+
+    // or delete the tick
+    // $mapping_window 0 GET NaN NaN NaN NULL
+  %> MACROMAPPER
+  ${2:pre} ${3:post} ${4:occurrences}
+] MAP
+]]></content>
+    <tabTrigger>MACROMAPPER</tabTrigger>
+    <scope>source.mc2</scope> 
+    <description>Macro MAPPER template</description>
+</snippet>
