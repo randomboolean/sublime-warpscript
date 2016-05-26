@@ -6,8 +6,8 @@ Warp Script is a time series data manipulation language for [Warp10](http://www.
 
 ## Version
 
-This package user have a x.y.z-indice version number.
-x.y.z is the base version of Warp10 pltaform, the "indice" is the package build number. This link is mandatory because Warp Scripts functions list is directly extracted from [Warp10-plateform](https://github.com/cityzendata/warp10-platform)
+This package user have a x.y.z version number.
+x.y.z is the base version of Warp10 platform. Warp Scripts functions list is directly extracted from [Warp10-platform](https://github.com/cityzendata/warp10-platform)
 
 ## Install
 

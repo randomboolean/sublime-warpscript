@@ -180,7 +180,194 @@ contexts:
       scope: keyword.operator.bitwise.mc2
 
   structures:
-    - match: (?<!\S)(\[|\]|\[\]|\}|}|\}}|<%|%>|<S|S>|null|null)(?!\S)
+    - match: (?<!\S)(\[|\]|\[\]|\{|\}|\{\}|<%|%>|<S|S>|null|null)(?!\S)
+      scope: keyword.control.mc2    
+
+  constants:
+    - match: (?<!\S)(true|false|E|e|NaN|MAXLONG|NULL|max.time.sliding.window|MINLONG|pi|PI|max.tick.sliding.window)(?!\S)    
+      scope: constant.language.mc2%YAML1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: WARPSCRIPT
+file_extensions: [mc2]
+scope: source.mc2
+contexts:
+  main:
+    # Comments begin with a '//' and finish at the end of the line
+    - match: \b*((//).*$)
+      scope: punctuation.definition.comment.mc2
+      push: line_comment
+
+    # rules
+    - include: comments    
+    - include: variables
+    - include: macros
+    - include: inline_strings
+    - include: inline_double_quoted_strings
+    - include: multiline_strings
+    - include: numbers
+
+    # language functions
+    - include: functions_trigonometry
+    - include: functions_string
+    - include: functions_date
+    - include: functions_bucketized
+    - include: functions_typeConversion
+    - include: functions_gts
+    - include: functions_list
+    - include: functions_stack
+    - include: functions_outlier
+    - include: functions_misc
+    - include: functions_math
+    - include: functions_geo
+    - include: functions_timeunit
+    - include: functions_platform
+    
+    # language frameworks   
+    - include: functions_frameworks
+
+    # language operators
+    - include: operators
+
+    # misc
+    - include: structures
+    - include: constants
+
+  comments:
+    - match: /\*\*/
+      scope: comment.block.empty.mc2
+    - include: comments-inline
+  comments-inline:
+    - match: /\*
+      captures:
+        0: punctuation.definition.comment.mc2
+      push:
+        - meta_scope: comment.block.java
+        - match: \*/
+          captures:
+            0: punctuation.definition.comment.mc2
+          pop: true
+    - match: \b*((//).*$)  
+
+  line_comment:
+    - meta_scope: comment.line.mc2
+    - match: $
+      pop: true 
+
+  variables:
+    - match: '\$([A-Za-z0-9._]+)'
+      scope: variable.parameter.mc2
+
+  macros:
+    - match: '\@([A-Za-z0-9._]+)'
+      scope: entity.name.filename.mc2
+
+  # Numbers
+  numbers:  
+    - match: (?<!\S)(-)?[0-9.]+\b
+      scope: constant.numeric.mc2
+
+  inline_strings:
+    - match: (?<!\S)('.*')(?!\S)
+      scope: string.quoted.double.mc2
+
+  inline_double_quoted_strings:
+    - match: (?<!\S)(".*")(?!\S)
+      scope: string.quoted.double.mc2
+
+              
+  multiline_strings:
+    # Strings begin and end with quotes, and use backslashes as an escape
+    # character
+    - match: \s*(<')\s*
+      scope: punctuation.definition.string.begin.mc2
+      push: multiline_string_end
+
+  multiline_string_end:
+    - meta_scope: string.quoted.double.mc2
+    - match: '\\.'
+      scope: constant.character.escape.mc2
+    - match: '^''>$'
+      scope: punctuation.definition.string.end.mc2
+      pop: true
+    - match: .*('>).*
+      scope: invalid      
+
+  # language functions
+  functions_trigonometry:
+    - match: (?<!\S)(SIN|TANH|ASIN|COS|ACOS|TORADIANS|SINH|TAN|ATAN|TODEGREES|COSH)(?!\S)
+      scope: support.function
+
+  functions_string:
+    - match: (?<!\S)(TRIM|TOBIN|FROMHEX|HEXTOB64|JOIN|HASH|->HEX|BINTOHEX|->B64|->B64URL|TOUPPER|TOBITS|MATCHER|HEX->|MATCH|HEXTOBIN|B64TOHEX|SPLIT|TOHEX|URLDECODE|B64URL->|URLENCODE|SUBSTRING|B64->|TEMPLATE|UUID|FROMBIN|FROMBITS|TOLOWER)(?!\S)
+      scope: support.function
+
+  functions_date:
+    - match: (?<!\S)(TSELEMENTS|ISO8601|STU|DURATION|MSTU|NOW)(?!\S)
+      scope: support.function
+
+  functions_bucketized:
+    - match: (?<!\S)(BUCKETCOUNT|INTERPOLATE|UNBUCKETIZE|FILLVALUE|FILLNEXT|FILLPREVIOUS|STL|LASTBUCKET|CROP|ATBUCKET|BUCKETSPAN)(?!\S)
+      scope: support.function
+
+  functions_typeConversion:
+    - match: (?<!\S)(TOLONG|TOSTRING|->JSON|JSON->|TODOUBLE|TOTIMESTAMP)(?!\S)
+      scope: support.function
+
+  functions_gts:
+    - match: (?<!\S)(NONEMPTY|FETCHBOOLEAN|ZSCORE|MERGE|RSORT|WRAP|COMPACT|FETCHLONG|FETCHSTRING|RENAME|FETCHDOUBLE|TIMESHIFT|TIMESPLIT|TIMECLIP|PARSESELECTOR|UPDATE|FETCH|ELEVATIONS|LOCATIONS|FIND|TICKLIST|ATINDEX|SORT|TOSELECTOR|COMMONTICKS|FILLTICKS|META|RANGECOMPACT|BBOX|FIRSTTICK|CORRELATE|DEDUP|INTEGRATE|ISONORMALIZE|LASTSORT|LASTTICK|NEWGTS|TICKS|LABELS|NAME|NORMALIZE|RESETS|CLONE|METASORT|UNWRAP|TIMESCALE|TICKINDEX|QUANTIZE|ADDVALUE|RELABEL|VALUES|RLOWESS|LOWESS|MUSIGMA|STANDARDIZE|NSUMSUMSQ|SHRINK|TIMEMODULO|CLONEEMPTY|SINGLEEXPONENTIALSMOOTHING|ATTICK)(?!\S)
+      scope: support.function
+
+  functions_list:
+    - match: (?<!\S)(CLONEREVERSE|SIZE|SET|APPEND|VALUELIST|LMAP|KEYLIST|SUBMAP|CONTAINSVALUE|->LIST|FLATTEN|SUBLIST|LFLATMAP|REVERSE|UNIQUE|CONTAINS|PUT|ZIP|MSORT|LIST->|GET|REMOVE|CONTAINSKEY|->MAP|MAP->|LSORT)(?!\S)
+      scope: support.function
+
+  functions_stack:
+    - match: (?<!\S)(PICK|ROLL|STORE|LOAD|DROPN|EXPORT|DOC|CSTORE|DEBUGOFF|DOCMODE|BOOTSTRAP|DEPTH|SWAP|ROT|DUP|CLEARTOMARK|DEBUGON|CLEAR|NDEBUGON|FORGET|COUNTTOMARK|AUTHENTICATE|RUN|DUPN|DROP|MARK|TYPEOF|ROLLD|DEF)(?!\S)
+      scope: support.function
+
+  functions_outlier:
+    - match: (?<!\S)(ZSCORETEST|HYBRIDTEST2|ESDTEST|HYBRIDTEST|STLESDTEST|THRESHOLDTEST|GRUBBSTEST)(?!\S)
+      scope: support.function
+
+  functions_misc:
+    - match: (?<!\S)(MACROFILTER|PARTITION|AFETCH|IMMUTABLE|LOG1P|MAKEGTS|COUNTERDELTA|FDWT|COPYGEO|ATTRIBUTES|MONOTONIC|PFILTER|MAXPIXELS|SETATTRIBUTES|LOCATIONOFFSET|CUDF|ULP|NOTBEFORE|ONLYBUCKETS|->Q|PAPPLY|COUNTERVALUE|QDIVIDE|OPTDTW|STRICTMAPPER|EVERY|IDWT|TIMINGS|FFTAP|MACROMAPPER|RESET|CHUNK|QROTATE|RANGE|SET->|Q->|DTW|PGraphics|VALUEDEDUP|PATTERNS|SETVALUE|DISCORDS|ELAPSED|QMULTIPLY|VALUEHISTOGRAM|COPYSIGN|LOCSTRINGS|COUNTER|LORAMIC|RVALUESORT|NOTAFTER|->SET|UNION|TICKSHIFT|IFFT|HUMANDURATION|MACROBUCKETIZER|FINDSTATS|INTERSECTION|DIFFERENCE|CLEARDEFS|VALUESORT|ISODURATION|MACROREDUCER|MAPID|QROTATION|OPB64TOHEX|ROTATIONQ|FUSE|LORAENC|STACKATTRIBUTE|DWTSPLIT|DOUBLEEXPONENTIALSMOOTHING|PATTERNDETECTION|STRICTPARTITION|DEVICES|CLEARSYMBOLS|VALUESPLIT|FFT|UDF|QCONJUGATE|HYPOT|FINDSETS|EXPM1|NOTIMINGS|UNIXTIMEALIGN|UNIXTIMEEND)(?!\S)
+      scope: support.function
+
+  functions_math:
+    - match: (?<!\S)(RAND|LOG10|FLOOR|NEXTAFTER|REVBITS|ABS|SIGNUM|SQRT|CEIL|MAX|NEXTUP|ROUND|NPDF|EXP|RINT|MIN|CBRT|LOG|IEEEREMAINDER|PROBABILITY|LBOUNDS|NBOUNDS)(?!\S)
+      scope: support.function
+
+  functions_geo:
+    - match: (?<!\S)(GEO.UNION|GEO.INTERSECTION|GEO.WKT|HAVERSINE|GEO.WITHIN|GEO.DIFFERENCE|GEO.INTERSECTS)(?!\S)
+      scope: support.function
+
+  functions_timeunit:
+    - match: (?<!\S)(d|h|m|s|w|ms|ns|ps|us)(?!\S)
+      scope: support.function
+
+  functions_platform:
+    - match: (?<!\S)(WEBCALL|MAXSYMBOLS|REV|TOKENINFO|SECUREKEY|MAXLOOP|JSONLOOSE|MAXDEPTH|MAXBUCKETS|SAVE|MAXOPS|IDENT|UNSECURE|RESTORE|MAXGTS|OPS|NOOP|URLFETCH|JSONSTRICT|LIMIT|EVALSECURE)(?!\S)
+      scope: support.function
+
+  functions_frameworks:
+    - match: (?<!\S)(APPLY|op.and.ignore-nulls|op.sub|op.ge|op.or.ignore-nulls|op.gt|op.or|op.mask|op.eq|op.mul|op.ne|op.div|op.add|op.and|op.le|op.lt|BUCKETIZE|bucketizer.mean.circular.exclude-nulls|bucketizer.first|bucketizer.max.forbid-nulls|bucketizer.join.forbid-nulls|bucketizer.max|bucketizer.mean|bucketizer.min|bucketizer.mean.circular|bucketizer.sum|bucketizer.percentile|bucketizer.count.exclude-nulls|bucketizer.last|bucketizer.join|bucketizer.min.forbid-nulls|bucketizer.median|bucketizer.count|bucketizer.count.nonnull|bucketizer.sum.forbid-nulls|bucketizer.mean.exclude-nulls|bucketizer.count.include-nulls|FILTER|filter.last.ne|filter.last.le|filter.last.lt|filter.last.gt|filter.last.ge|filter.last.eq|filter.byclass|filter.latencies|filter.bymetadata|filter.bylabels|MAP|mapper.geo.within|mapper.geo.outside|mapper.round|mapper.floor|mapper.ceil|mapper.tostring|mapper.abs|mapper.todouble|mapper.tanh|mapper.toboolean|mapper.sigmoid|mapper.tolong|mapper.second|mapper.add|mapper.minute|mapper.hour|mapper.tick|mapper.log|mapper.day|mapper.mul|mapper.pow|mapper.weekday|mapper.exp|mapper.hdist|mapper.min|mapper.finite|mapper.vspeed|mapper.mean.exclude-nulls|mapper.sd|mapper.max|mapper.sum.forbid-nulls|mapper.geo.clear|mapper.product|mapper.count.include-nulls|mapper.delta|mapper.count.exclude-nulls|mapper.min.forbid-nulls|mapper.sum|mapper.join.forbid-nulls|mapper.lowest|mapper.mean.circular|mapper.join|mapper.max.forbid-nulls|mapper.count.nonnull|mapper.mean.circular.exclude-nulls|mapper.mean|mapper.highest|mapper.rate|mapper.truecourse|mapper.sd.forbid-nulls|mapper.count|mapper.hspeed|mapper.vdist|mapper.first|mapper.var|mapper.var.forbid-nulls|mapper.last|mapper.median|mapper.replace|mapper.dotproduct.sigmoid|mapper.kernel.silverman|mapper.kernel.epanechnikov|mapper.eq|mapper.npdf|mapper.gt|mapper.ge|mapper.kernel.gaussian|mapper.dotproduct.tanh|mapper.percentile|mapper.year|mapper.dotproduct|mapper.kernel.triweight|mapper.kernel.quartic|mapper.kernel.logistic|mapper.max.x|mapper.distinct|mapper.month|mapper.lt|mapper.kernel.cosine|mapper.le|mapper.kernel.uniform|mapper.min.x|mapper.ne|mapper.dotproduct.positive|mapper.kernel.triangular|mapper.kernel.tricube|mapper.geo.approximate|REDUCE|reducer.min|reducer.var.forbid-nulls|reducer.mean.circular|reducer.sum|reducer.min.nonnull|reducer.count|reducer.sd|reducer.var|reducer.max.nonnull|reducer.median|reducer.shannonentropy.1|reducer.shannonentropy.0|reducer.count.include-nulls|reducer.sum.forbid-nulls|reducer.sd.forbid-nulls|reducer.percentile|reducer.join|reducer.max|reducer.count.nonnull|reducer.min.forbid-nulls|reducer.join.nonnull|reducer.count.exclude-nulls|reducer.sum.nonnull|reducer.join.forbid-nulls|reducer.product|reducer.mean.circular.exclude-nulls|reducer.argmax|reducer.max.forbid-nulls|reducer.mean|reducer.argmin|reducer.mean.exclude-nulls)(?!\S)
+      scope: entity.name.function.mc2
+
+  operators:
+    - match: (?<!\S)(STOP|FOREACH|IFTE|CONTINUE|FORSTEP|FOR|EVAL|ASSERT|NRETURN|ISNULL|SWITCH|RETURN|IFT|DEFINED|MSGFAIL|BREAK|FAIL|ISNaN|UNTIL|WHILE)(?!\S)
+      scope: keyword.control.mc2
+    - match: (?<!\S)(!=|<|>|~=|<=|==|>=)(?!\S)
+      scope: keyword.operator.comparison.mc2
+    - match: (?<!\S)(%|\*|\+|-|/|\*\*)(?!\S)
+      scope: keyword.operator.arithmetic.mc2
+    - match: (?<!\S)(!|&&|AND|OR|NOT|\|\|)(?!\S)
+      scope: keyword.operator.logical.mc2
+    - match: (?<!\S)(&|\^|\||>>>|~|<<|>>)(?!\S)
+      scope: keyword.operator.bitwise.mc2
+
+  structures:
+    - match: (?<!\S)(\[|\]|\[\]|\{|\}|\{\}|<%|%>|<S|S>|null|null)(?!\S)
       scope: keyword.control.mc2    
 
   constants:

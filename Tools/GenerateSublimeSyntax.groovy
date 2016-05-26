@@ -33,10 +33,10 @@ def String regexpEscape(String input) {
   input = input.replace('+', '\\+')
   input = input.replace('[', '\\[')
   input = input.replace(']', '\\]')
-  input = input.replace('(', '\\)')
+  input = input.replace('(', '\\(')
   input = input.replace(')', '\\)')
-  input = input.replace('{', '\\}')
-  input = input.replace('{', '\\}')  
+  input = input.replace('{', '\\{')
+  input = input.replace('}', '\\}')  
   return input
 } 
 
