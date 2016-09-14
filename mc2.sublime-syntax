@@ -81,11 +81,11 @@ contexts:
       scope: constant.numeric.mc2
 
   inline_strings:
-    - match: (?<!\S)('.*')(?!\S)
+    - match: (?<!\S)('[^']*')(?!\S)
       scope: string.quoted.double.mc2
 
   inline_double_quoted_strings:
-    - match: (?<!\S)(".*")(?!\S)
+    - match: (?<!\S)("[^"]*")(?!\S)
       scope: string.quoted.double.mc2
 
               
